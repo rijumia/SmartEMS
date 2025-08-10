@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartEMS - Intelligent Employee Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1A365D;
+            --secondary-color: #2C5282;
+            --accent-color: #3182CE;
+            --light-accent: #63B3ED;
+            --dark-color: #1A202C;
+            --light-bg: #F7FAFC;
+            --text-gray: #4A5568;
+            --light-gray: #E2E8F0;
+            --success-color: #38A169;
+            --warning-color: #D69E2E;
+            --danger-color: #E53E3E;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--dark-color);
+            overflow-x: hidden;
+            background-color: var(--light-bg);
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--dark-color);
+        }
+        
+        p {
+            line-height: 1.6;
+            color: var(--text-gray);
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+        
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand i {
+            margin-right: 0.5rem;
+            -webkit-text-fill-color: var(--primary-color);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-color) !important;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-login {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(26, 54, 93, 0.3);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #1A365D 0%, #2C5282 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 0 4rem;
+        }
+        
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.8;
+        }
+        
+        .hero-shape {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            top: -250px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        .hero-shape-2 {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -100px;
+            animation: float 12s ease-in-out infinite reverse;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .hero-content p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .hero-buttons .btn {
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-gradient {
+            background: white;
+            color: var(--primary-color);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .hero-image {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-image img {
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 0;
+            background: white;
+            position: relative;
+        }
+        
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: white;
+            transform: skewY(-2deg);
+            z-index: -1;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 1rem;
+            background: white;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+            border-top: 4px solid var(--accent-color);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--light-accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        
+        /* Dashboard Preview Section */
+        .dashboard-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .dashboard-container {
+            background: var(--light-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .team-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-card:hover .team-img img {
+            transform: scale(1.05);
+        }
+        
+        .team-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .team-info h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .team-info p {
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+        
+        .team-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .team-social a:hover {
+            background: var(--gradient);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            box-shadow: var(--card-hover-shadow);
+            border: 2px solid var(--accent-color);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--gradient);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+        
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem;
+        }
+        
+        .plan-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-features li i {
+            color: var(--success-color);
+            margin-right: 0.75rem;
+        }
+        
+        .plan-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .plan-btn.primary {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .plan-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
+            color: white;
+        }
+        
+        .plan-btn.outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .plan-btn.outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            height: 100%;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .testimonial-content::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--light-gray);
+            position: absolute;
+            top: -1rem;
+            left: -1rem;
+            opacity: 0.5;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+        
+        .author-info h4 {
+            margin: 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .author-info p {
+            margin: 0;
+            color: var(--text-gray);
+            font-size: 0.875rem;
+        }
+        
+        .testimonial-rating {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+        }
+        
+        /* Location Section */
+        .location-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .location-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .location-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        
+        .location-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .location-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .location-card:hover .location-img img {
+            transform: scale(1.05);
+        }
+        
+        .location-info {
+            padding: 1.5rem;
+        }
+        
+        .location-info h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .location-info p {
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+        
+        .location-details {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+        }
+        
+        .location-details i {
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 0;
+            background: var(--gradient);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .cta-content p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary-color);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            color: var(--primary-color);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 0.25rem 0;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.25rem;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .social-links a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .footer-logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .hero-image {
+                margin-top: 2rem;
+            }
+        }
+        
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light-gray);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Back to top button */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: var(--card-shadow);
+        }
+        
+        #backToTop.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        #backToTop:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-circle"></div>
+    </div>
+    
+    <!-- Back to top button -->
+    <div id="backToTop">
+        <i class="bi bi-arrow-up"></i>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-diagram-3"></i> SmartEMS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stats">Stats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#locations">Locations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-login text-white" href="{% url 'logIn' %}">Login/Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-pattern"></div>
+        <div class="hero-shape"></div>
+        <div class="hero-shape-2"></div>
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <div class="hero-content" data-aos="fade-up">
+                        <h1>Transform Your Workforce with Intelligent Management</h1>
+                        <p>SmartEMS leverages AI and advanced analytics to streamline HR processes, boost productivity, and empower your team to achieve more.</p>
+                        <div class="hero-buttons">
+                            <a href="#" class="btn-gradient">
+                                <i class="bi bi-play-circle me-2"></i>Watch Demo
+                            </a>
+                            <a href="#" class="btn-outline">
+                                Start Free Trial
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image" data-aos="fade-left">
+                        <img src="https://shiftin.app/wp-content/uploads/2021/10/what-are-employee-management-systems.jpg" alt="Dashboard Preview" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <div class="stat-number" data-target="5000">0</div>
+                        <div class="stat-label">Active Companies</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="stat-number" data-target="250000">0</div>
+                        <div class="stat-label">Employees Managed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-activity"></i>
+                        </div>
+                        <div class="stat-number" data-target="99">0</div>
+                        <div class="stat-label">% Uptime</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="bi bi-headset"></i>
+                        </div>
+                        <div class="stat-number" data-target="24">0</div>
+                        <div class="stat-label">/7 Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Powerful Features for Modern Teams</h2>
+                <p>Everything you need to manage your employees efficiently and effectively</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h3>Employee Directory</h3>
+                        <p>Comprehensive employee profiles with skills, departments, and contact information. Search and filter capabilities for quick access.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <h3>Time & Attendance</h3>
+                        <p>Automated time tracking, leave management, and attendance monitoring with real-time analytics and reporting.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                        <h3>Performance Analytics</h3>
+                        <p>Track employee performance with detailed metrics, KPIs, and customizable dashboards for data-driven decisions.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h3>Schedule Management</h3>
+                        <p>Create and manage employee schedules, shift planning, and resource allocation with intelligent optimization.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <h3>Document Management</h3>
+                        <p>Secure storage and management of employee documents, contracts, and certificates with version control.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h3>Security & Compliance</h3>
+                        <p>Enterprise-grade security with role-based access control, audit trails, and GDPR compliance features.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Dashboard Preview Section -->
+    <section class="dashboard-section" id="dashboard">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Intelligent Analytics Dashboard</h2>
+                <p>Real-time insights and data visualization for informed decision-making</p>
+            </div>
+            <div class="dashboard-container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="chart-container">
+                            <canvas id="departmentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <div class="chart-container">
+                            <canvas id="attendanceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="chart-container">
+                            <canvas id="satisfactionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section class="team-section" id="team">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Meet Our HR Experts</h2>
+                <p>Our team of professionals dedicated to revolutionizing employee management</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://picsum.photos/seed/hr1/400/300" alt="Sarah Johnson">
+                        </div>
+                        <div class="team-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>HR Director</p>
+                            <div class="team-social">
+                                <a href="#"><i class="bi bi-linkedin"></i></a>
+                                <a href="#"><i class="bi bi-twitter"></i></a>
+                                <a href="#"><i class="bi bi-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://picsum.photos/seed/hr2/400/300" alt="Michael Chen">
+                        </div>
+                        <div class="team-info">
+                            <h4>Michael Chen</h4>
+                            <p>Product Manager</p>
+                            <div class="team-social">
+                                <a href="#"><i class="bi bi-linkedin"></i></a>
+                                <a href="#"><i class="bi bi-twitter"></i></a>
+                                <a href="#"><i class="bi bi-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://picsum.photos/seed/hr3/400/300" alt="Emily Rodriguez">
+                        </div>
+                        <div class="team-info">
+                            <h4>Emily Rodriguez</h4>
+                            <p>UX Designer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="bi bi-linkedin"></i></a>
+                                <a href="#"><i class="bi bi-twitter"></i></a>
+                                <a href="#"><i class="bi bi-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="team-card">
+                        <div class="team-img">
+                            <img src="https://picsum.photos/seed/hr4/400/300" alt="David Wilson">
+                        </div>
+                        <div class="team-info">
+                            <h4>David Wilson</h4>
+                            <p>Lead Developer</p>
+                            <div class="team-social">
+                                <a href="#"><i class="bi bi-linkedin"></i></a>
+                                <a href="#"><i class="bi bi-twitter"></i></a>
+                                <a href="#"><i class="bi bi-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Choose the plan that works best for your team</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Starter</h3>
+                        <div class="plan-price">$29<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Up to 10 employees</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Basic time tracking</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Employee directory</li>
+                            <li><i class="bi bi-check-circle-fill"></i> 5GB storage</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Email support</li>
+                        </ul>
+                        <a href="#" class="plan-btn outline">Get Started</a>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="pricing-card featured">
+                        <h3 class="plan-name">Professional</h3>
+                        <div class="plan-price">$79<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Up to 50 employees</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Advanced time tracking</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Performance analytics</li>
+                            <li><i class="bi bi-check-circle-fill"></i> 50GB storage</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Priority support</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Custom reports</li>
+                        </ul>
+                        <a href="#" class="plan-btn primary">Get Started</a>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="pricing-card">
+                        <h3 class="plan-name">Enterprise</h3>
+                        <div class="plan-price">$199<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="bi bi-check-circle-fill"></i> Unlimited employees</li>
+                            <li><i class="bi bi-check-circle-fill"></i> All features included</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Advanced scheduling</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Unlimited storage</li>
+                            <li><i class="bi bi-check-circle-fill"></i> 24/7 dedicated support</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Custom integrations</li>
+                        </ul>
+                        <a href="#" class="plan-btn outline">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>What Our Clients Say</h2>
+                <p>Join thousands of companies that trust SmartEMS</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div class="testimonial-content">
+                            "SmartEMS has revolutionized how we manage our team. The automated features save us hours each week, and the analytics help us make better decisions."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JD</div>
+                            <div class="author-info">
+                                <h4>John Doe</h4>
+                                <p>CEO, TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div class="testimonial-content">
+                            "The user interface is intuitive and powerful. Our HR team loves how easy it is to track attendance and manage employee records."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SM</div>
+                            <div class="author-info">
+                                <h4>Sarah Miller</h4>
+                                <p>HR Director, InnovateCo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <div class="testimonial-content">
+                            "Implementation was seamless and the support team is exceptional. SmartEMS has become an essential tool for our operations."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RJ</div>
+                            <div class="author-info">
+                                <h4>Robert Johnson</h4>
+                                <p>Operations Manager, GrowthInc</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Location Section -->
+    <section class="location-section" id="locations">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Global Presence</h2>
+                <p>Find us in key business hubs around the world</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="location-card">
+                        <div class="location-img">
+                            <img src="https://picsum.photos/seed/ny/400/200" alt="New York">
+                        </div>
+                        <div class="location-info">
+                            <h4>New York Headquarters</h4>
+                            <p>Our main office in the heart of Manhattan</p>
+                            <div class="location-details">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>350 Fifth Avenue, NY 10118</span>
+                            </div>
+                            <div class="location-details">
+                                <i class="bi bi-telephone"></i>
+                                <span>+1 (212) 555-7890</span>
+                            </div>
+                            <div class="location-details">
+                                <i class="bi bi-envelope"></i>
+                                <span>ny@smartems.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="location-card">
+                        <div class="location-img">
+                            <img src="https://picsum.photos/seed/ldn/400/200" alt="London">
+                        </div>
+                        <div class="location-info">
+                            <h4>London Office</h4>
+                            <p>Serving our European clients from the UK</p>
+                            <div class="location-details">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>2 Kingdom Street, London, W2 6BD</span>
+                            </div>
+                            <div class="location-details">
+                                <i class="bi bi-telephone"></i>
+                                <span>+44 20 7123 4567</span>
+                            </div>
+                            <div class="location-details">
+                                <i class="bi bi-envelope"></i>
+                                <span>london@smartems.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="location-card">
+                        <div class="location-img">
+                            <img src="https://picsum.photos/seed/sg/400/200" alt="Singapore">
+                        </div>
+                        <div class="location-info">
+                            <h4>Singapore Office</h4>
+                            <p>Our Asia-Pacific hub in Singapore</p>
+                            <div class="location-details">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>8 Marina View, Singapore 018960</span>
+                            </div>
+                            <div class="location-details">
+                                <i class="bi bi-telephone"></i>
+                                <span>+65 6789 0123</span>
+                            </div>
+                            <div class="location-details">
+                                <i class="bi bi-envelope"></i>
+                                <span>singapore@smartems.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="fade-up">
+                <h2>Ready to Transform Your Workforce?</h2>
+                <p>Join thousands of companies already using SmartEMS to manage their teams more efficiently.</p>
+                <a href="#" class="btn-white">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Start Your Free Trial
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <i class="bi bi-diagram-3"></i> SmartEMS
+                    </div>
+                    <p class="text-white-50">Intelligent employee management system for modern businesses.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">Product</h6>
+                    <div class="footer-links">
+                        <a href="#features" class="mb-2">Features</a>
+                        <a href="#pricing" class="mb-2">Pricing</a>
+                        <a href="#" class="mb-2">Integrations</a>
+                        <a href="#" class="mb-2">Updates</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">Company</h6>
+                    <div class="footer-links">
+                        <a href="#team" class="mb-2">About Us</a>
+                        <a href="#" class="mb-2">Careers</a>
+                        <a href="#" class="mb-2">Blog</a>
+                        <a href="#" class="mb-2">Press</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">Resources</h6>
+                    <div class="footer-links">
+                        <a href="#" class="mb-2">Documentation</a>
+                        <a href="#" class="mb-2">Support</a>
+                        <a href="#" class="mb-2">API</a>
+                        <a href="#" class="mb-2">Status</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">Legal</h6>
+                    <div class="footer-links">
+                        <a href="#" class="mb-2">Privacy</a>
+                        <a href="#" class="mb-2">Terms</a>
+                        <a href="#" class="mb-2">Security</a>
+                        <a href="#" class="mb-2">Cookies</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <p>&copy; 2025 SmartEMS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+        
+        // Hide loader when page is loaded
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 500);
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Back to top button
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Animated counter for stats
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
+        
+        const animateCounter = (counter) => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const increment = target / speed;
+            
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(() => animateCounter(counter), 10);
+            } else {
+                counter.innerText = target;
+            }
+        };
+        
+        // Intersection Observer for stats animation
+        const statsSection = document.querySelector('.stats-section');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    counters.forEach(counter => {
+                        animateCounter(counter);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+        
+        // Chart.js configurations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Performance Chart
+            const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(performanceCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Employee Performance',
+                        data: [65, 68, 72, 75, 78, 82, 85],
+                        backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                        borderColor: 'rgba(49, 130, 206, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        pointBackgroundColor: 'rgba(49, 130, 206, 1)',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Employee Performance Trend',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 60,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Department Chart
+            const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+            new Chart(departmentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Engineering', 'Sales', 'Marketing', 'HR', 'Finance'],
+                    datasets: [{
+                        data: [35, 25, 15, 15, 10],
+                        backgroundColor: [
+                            'rgba(49, 130, 206, 0.8)',
+                            'rgba(56, 161, 105, 0.8)',
+                            'rgba(214, 158, 46, 0.8)',
+                            'rgba(229, 62, 62, 0.8)',
+                            'rgba(128, 90, 213, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(49, 130, 206, 1)',
+                            'rgba(56, 161, 105, 1)',
+                            'rgba(214, 158, 46, 1)',
+                            'rgba(229, 62, 62, 1)',
+                            'rgba(128, 90, 213, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Department Distribution',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+            
+            // Attendance Chart
+            const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+            new Chart(attendanceCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                    datasets: [{
+                        label: 'Attendance Rate',
+                        data: [92, 94, 96, 95, 93],
+                        backgroundColor: 'rgba(56, 161, 105, 0.6)',
+                        borderColor: 'rgba(56, 161, 105, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Weekly Attendance Rate',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 85,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Satisfaction Chart
+            const satisfactionCtx = document.getElementById('satisfactionChart').getContext('2d');
+            new Chart(satisfactionCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Work Environment', 'Management', 'Compensation', 'Growth', 'Work-Life Balance'],
+                    datasets: [{
+                        label: 'Employee Satisfaction',
+                        data: [85, 75, 80, 90, 70],
+                        backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                        borderColor: 'rgba(49, 130, 206, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(49, 130, 206, 1)',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Employee Satisfaction Metrics',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

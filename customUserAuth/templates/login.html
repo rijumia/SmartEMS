@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="SmartEMS - Employee Management System">
+		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+        <meta name="author" content="Riju Mia">
+        <title>Login - HRMS admin template</title>
+		
+		<!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.png' %}">
+		
+		<!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}">
+
+		<!-- Fontawesome CSS -->
+        <link rel="stylesheet" href="{% static "assets/plugins/fontawesome/css/fontawesome.min.css" %}">
+    	<link rel="stylesheet" href="{% static "assets/plugins/fontawesome/css/all.min.css" %}">
+
+		<!-- Lineawesome CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/line-awesome.min.css" %}">
+		<link rel="stylesheet" href="{% static "assets/css/material.css" %}">
+			
+		<!-- Lineawesome CSS -->
+		<link rel="stylesheet" href="{% static "assets/css/line-awesome.min.css" %}">
+		
+		<!-- Main CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/style.css" %}">
+
+    </head>
+    <body class="account-page">
+	
+		<!-- Main Wrapper -->
+        <div class="main-wrapper">
+			<div class="account-content">
+				{% comment %} <a href="" class="btn btn-primary apply-btn">Apply Job</a> {% endcomment %}
+				<div class="container">
+				
+					<!-- Account Logo -->
+					<div class="account-logo">
+						<a href=""><img src="{% static "assets/img/logo2.png" %}" alt="SmartEMS"></a>
+					</div>
+					<!-- /Account Logo -->
+					
+					<div class="account-box">
+						<div class="account-wrapper">
+							<h3 class="account-title">Login</h3>
+							<p class="account-subtitle">Access to our dashboard</p>
+							
+							<!-- Account Form -->
+							<form action="" method="POST">
+								{% csrf_token %}
+								<div class="input-block mb-4">
+									<label class="col-form-label">Email Address</label>
+									{% comment %} <input class="form-control" type="text" value="admin@smartems.com"> {% endcomment %}
+									<input class="form-control" type="text" value="">
+								</div>
+								<div class="input-block mb-4">
+									<div class="row align-items-center">
+										<div class="col">
+											<label class="col-form-label">Password</label>
+										</div>
+										<div class="col-auto">
+											<a class="text-muted" href="forgot-password.html">
+												Forgot password?
+											</a>
+										</div>
+									</div>
+									<div class="position-relative">
+										{% comment %} <input class="form-control" type="password" value="admin" id="password"> {% endcomment %}
+										<input class="form-control" type="password" value="" id="password">
+										<span class="fa-solid fa-eye-slash" id="toggle-password"></span>
+									</div>
+								</div>
+								<div class="input-block mb-4 text-center">
+									<button class="btn btn-primary account-btn" type="submit">Login</button>
+								</div>
+								<div class="account-footer">
+									<p>Don't have an account yet? <a href="{% url 'signUp' %}">Register</a></p>
+								</div>
+							</form>
+							<!-- /Account Form -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- /Main Wrapper -->
+		
+		<!-- jQuery -->
+       <script src="{% static "assets/js/jquery-3.7.0.min.js" %}"></script>
+		
+		<!-- Bootstrap Core JS -->
+        <script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+		
+		<!-- Custom JS -->
+		<script src="{% static "assets/js/app.js" %}"></script>
+		
+    </body>
+</html>
