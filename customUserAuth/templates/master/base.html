@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark"  data-sidebar-size="lg" data-sidebar-image="none">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="SmartEMS - Employee Management System">
+		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+        <meta name="author" content="SmartEMS - Employee Management System">
+        <title>Dashboard - SmartEMS - Employee Management System</title>
+		
+		<!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{% static "assets/img/favicon.png" %}">
+		
+		<!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}">
+        
+		<!-- Fontawesome CSS -->
+        <link rel="stylesheet" href="{% static "assets/plugins/fontawesome/css/fontawesome.min.css" %}">
+    	<link rel="stylesheet" href="{% static "assets/plugins/fontawesome/css/all.min.css" %}">
+
+		<!-- Lineawesome CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/line-awesome.min.css" %}">
+		<link rel="stylesheet" href="{% static "assets/css/material.css" %}">
+		
+		<!-- Chart CSS -->
+		<link rel="stylesheet" href="{% static "assets/plugins/morris/morris.css" %}">
+		
+		<!-- Main CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/style.css" %}">
+	
+    </head>
+	
+    <body>
+		<!-- Main Wrapper -->
+        <div class="main-wrapper">
+		{% include 'master/top_navbar.html' %}
+
+        {% include 'master/navbar.html' %}
+
+        {% block content %}
+        
+        {% endblock content %}
+			
+        </div>
+        <!-- /Main Wrapper -->
+		<!-- jQuery -->
+       <script src="{% static "assets/js/jquery-3.7.0.min.js" %}"></script>
+		
+		<!-- Bootstrap Core JS -->
+        <script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+		
+		<!-- Slimscroll JS -->
+		<script src="{% static "assets/js/jquery.slimscroll.min.js" %}"></script>
+		
+		<!-- Chart JS -->
+		<script src="{% static "assets/plugins/morris/morris.min.js" %}"></script>
+		<script src="{% static "assets/plugins/raphael/raphael.min.js" %}"></script>
+		<script src="{% static "assets/js/chart.js" %}"></script>
+		<script src="{% static "assets/js/greedynav.js" %}"></script>
+
+		 <!-- Theme Settings JS -->
+		<script src="{% static "assets/js/layout.js" %}"></script>
+		<script src="{% static "assets/js/theme-settings.js" %}"></script>
+
+		<!-- Custom JS -->
+		<script src="{% static "assets/js/app.js" %}"></script>
+		
+    </body>
+</html>
