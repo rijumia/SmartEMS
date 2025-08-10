@@ -6,7 +6,6 @@ class CustomUserAuthModel(AbstractUser):
     user_types = models.CharField(choices=[
         ('Admin', 'Admin'),
         ('HR', 'HR'),
-        ('Account', 'Account'),
         ('Employee', 'Employee'),
     ], max_length=10, null=True)
 
