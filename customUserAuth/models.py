@@ -9,11 +9,6 @@ class CustomUserAuthModel(AbstractUser):
         ('Account', 'Account'),
         ('Employee', 'Employee'),
     ], max_length=10, null=True)
-    gender = models.CharField(choices=[
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
-    ], max_length=10, null=True, blank=True, default='Set Your Gender')
 
     def __str__(self):
         return self.email 
