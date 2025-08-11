@@ -61,7 +61,3 @@ def logOut(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect('logIn')
-
-
-def dashboard(request):
-    return render(request, 'dashboard.html')
