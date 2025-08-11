@@ -266,10 +266,10 @@
 						<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
 							<span class="user-img"><img src="{% static "assets/img/profiles/avatar-21.jpg" %}" alt="User Image">
 							<span class="status online"></span></span>
-							<span>Admin</span>
+							<span>{{request.user.user_types}}</span>
 						</a>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="profile.html">My Profile</a>
+							<a class="dropdown-item" href="">My Profile</a>
 							<a class="dropdown-item" href="settings.html">Settings</a>
 							<a class="dropdown-item" href="{% url 'logOut' %}">Logout</a>
 						</div>
