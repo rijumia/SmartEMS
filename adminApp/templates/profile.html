@@ -27,9 +27,30 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="profile-view">
-										<div class="profile-img-wrap">
+										{% comment %} <div class="profile-img-wrap">
 											<div class="profile-img">
 												<a href="#"><img src="assets/img/profiles/avatar-02.jpg" alt="User Image"></a>
+											</div>
+										</div> {% endcomment %}
+										<div class="profile-img-wrap">
+    										<div class="profile-img">
+												<a href="#">
+													<img 
+														src="
+														{% if request.user.profile.profile_image %}
+															{{ request.user.profile.profile_image.url }}
+														{% elif request.user.first_name and request.user.last_name %}
+															https://avatar.iran.liara.run/username?username={{ request.user.first_name }}+{{ request.user.last_name }}
+														{% elif request.user.get_full_name %}
+															https://avatar.iran.liara.run/username?username={{ request.user.get_full_name|urlencode }}
+														{% else %}
+															https://avatar.iran.liara.run/username?username={{ request.user.username|urlencode }}
+														{% endif %}
+														" 
+														alt="User Image"
+														style="width: 100px; height: 100px; border-radius: 50%;"
+													>
+												</a>
 											</div>
 										</div>
 										<div class="profile-basic">
@@ -39,7 +60,7 @@
 														<h3 class="user-name m-t-0 mb-0">{{ request.user.profile.full_name }}</h3>
 														<h6 class="text-muted">UI/UX Design Team</h6>
 														<small class="text-muted">Web Designer</small>
-														<div class="staff-id">Employee ID : FT-0001</div>
+														<div class="staff-id">Employee ID : EMS-0001</div>
 														<div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
 														<div class="staff-msg"><a class="btn btn-custom" href="">Send Message</a></div>
 													</div>
@@ -66,6 +87,7 @@
 															<div class="title">Gender:</div>
 															<div class="text">Male</div>
 														</li>
+														{% if request.user.user_types != 'Admin' %}
 														<li>
 															<div class="title">Reports to:</div>
 															<div class="text">
@@ -79,6 +101,7 @@
 																</a>
 															</div>
 														</li>
+														{% endif %}
 													</ul>
 												</div>
 											</div>
