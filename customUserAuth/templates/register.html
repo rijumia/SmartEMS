@@ -37,7 +37,13 @@
 						<div class="account-wrapper">
 							<h3 class="account-title">Register</h3>
 							<p class="account-subtitle">Access to our dashboard</p>
-							
+							{% if messages %}
+								<div class="alert alert-warning">
+									{% for message in messages %}
+									  <p>{{ message }}</p>
+									{% endfor %}
+								</div>
+							{% endif %}
 							<!-- Account Form -->
 							<form action="" method="POST">
                                 {% csrf_token %}
