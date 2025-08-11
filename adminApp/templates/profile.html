@@ -58,10 +58,10 @@
 												<div class="col-md-5">
 													<div class="profile-info-left">
 														<h3 class="user-name m-t-0 mb-0">{{ request.user.profile.full_name }}</h3>
-														<h6 class="text-muted">UI/UX Design Team</h6>
-														<small class="text-muted">Web Designer</small>
-														<div class="staff-id">Employee ID : EMS-0001</div>
-														<div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+														<h6 class="text-muted">{{request.user.profile.position}}</h6>
+														<small class="text-muted">{{ request.user.profile.position.department.name }}</small>
+														<div class="staff-id">Employee ID : EMS-{{request.user.profile.employee_id}}</div>
+														<div class="small doj text-muted">Date of Join : {{request.user.profile.date_of_joining}}</div>
 														<div class="staff-msg"><a class="btn btn-custom" href="">Send Message</a></div>
 													</div>
 												</div>
@@ -69,7 +69,7 @@
 													<ul class="personal-info">
 														<li>
 															<div class="title">Phone:</div>
-															<div class="text"><a href="">9876543210</a></div>
+															<div class="text"><a href="">{{request.user.profile.phone}}</a></div>
 														</li>
 														<li>
 															<div class="title">Email:</div>
@@ -77,15 +77,15 @@
 														</li>
 														<li>
 															<div class="title">Birthday:</div>
-															<div class="text">24th July</div>
+															<div class="text">{{request.user.profile.birthday}}</div>
 														</li>
 														<li>
 															<div class="title">Address:</div>
-															<div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
+															<div class="text">{{request.user.profile.address}}</div>
 														</li>
 														<li>
 															<div class="title">Gender:</div>
-															<div class="text">Male</div>
+															<div class="text">{{request.user.profile.gender|capfirst}}</div>
 														</li>
 														{% if request.user.user_types != 'Admin' %}
 														<li>
@@ -93,7 +93,22 @@
 															<div class="text">
 															   <div class="avatar-box">
 																  <div class="avatar avatar-xs">
-																	 <img src="assets/img/profiles/avatar-16.jpg" alt="User Image">
+																	 {% comment %} <img src="assets/img/profiles/avatar-16.jpg" alt="User Image"> {% endcomment %}
+																		<img 
+																			src="
+																			{% if request.user.profile.reports_to %}
+																				{{ request.user.profile.reports_to.url }}
+																			{% elif request.user.first_name and request.user.last_name %}
+																				https://avatar.iran.liara.run/username?username={{ request.user.first_name }}+{{ request.user.last_name }}
+																			{% elif request.user.get_full_name %}
+																				https://avatar.iran.liara.run/username?username={{ request.user.get_full_name|urlencode }}
+																			{% else %}
+																				https://avatar.iran.liara.run/username?username={{ request.user.username|urlencode }}
+																			{% endif %}
+																			" 
+																			alt="User Image"
+																			style="width: 40px; height: 50px; border-radius: 50%;"
+																		>
 																  </div>
 															   </div>
 															   <a href="profile.html">
