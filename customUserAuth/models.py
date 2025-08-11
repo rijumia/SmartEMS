@@ -10,5 +10,5 @@ class CustomUserAuthModel(AbstractUser):
     ], max_length=10, null=True)
 
     def __str__(self):
-        return self.email 
+        return self.username 
     

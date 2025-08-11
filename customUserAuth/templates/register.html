@@ -40,43 +40,43 @@
 							
 							<!-- Account Form -->
 							<form action="" method="POST">
-    {% csrf_token %}
+                                {% csrf_token %}
     
-    <div class="input-block mb-4">
-        <label class="col-form-label">Email<span class="mandatory">*</span></label>
-        <input class="form-control" type="text" name="email">
-    </div>
+                                <div class="input-block mb-4">
+                                    <label class="col-form-label">Email<span class="mandatory">*</span></label>
+                                    <input class="form-control" type="text" name="email">
+                                </div>
     
-    <div class="input-block mb-4">
-        <label class="col-form-label">Password<span class="mandatory">*</span></label>
-        <input class="form-control" type="password" name="password">
-    </div>
+                                <div class="input-block mb-4">
+                                    <label class="col-form-label">Password<span class="mandatory">*</span></label>
+                                    <input class="form-control" type="password" name="password">
+                                </div>
     
-    <div class="input-block mb-4">
-        <label class="col-form-label">Repeat Password<span class="mandatory">*</span></label>
-        <input class="form-control" type="password" name="confirm_password">
-    </div>
+                                <div class="input-block mb-4">
+                                    <label class="col-form-label">Repeat Password<span class="mandatory">*</span></label>
+                                    <input class="form-control" type="password" name="confirm_password">
+                                </div>
 
-    <!-- User Type -->
-    <div class="input-block mb-4">
-        <label class="col-form-label">User Type<span class="mandatory">*</span></label>
-        <select class="form-control" name="user_type">
-            <option value="">Select User Type</option>
-            <option value="Admin">Admin</option>
-            <option value="HR">HR</option>
-            <option value="Account">Account</option>
-            <option value="Employee">Employee</option>
-        </select>
-    </div>
+                                    {% comment %} <!-- User Type -->
+                                    <div class="input-block mb-4">
+                                        <label class="col-form-label">User Type<span class="mandatory">*</span></label>
+                                        <select class="form-control" name="user_type">
+                                            <option value="">Select User Type</option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="HR">HR</option>
+                                            <option value="Account">Account</option>
+                                            <option value="Employee">Employee</option>
+                                        </select>
+                                    </div> {% endcomment %}
 
-    <div class="input-block mb-4 text-center">
-        <button class="btn btn-primary account-btn" type="submit">Register</button>
-    </div>
+                                <div class="input-block mb-4 text-center">
+                                    <button class="btn btn-primary account-btn" type="submit">Register</button>
+                                </div>
 
-    <div class="account-footer">
-        <p>Already have an account? <a href="{% url 'logIn' %}">Login</a></p>
-    </div>
-</form>
+                                <div class="account-footer">
+                                    <p>Already have an account? <a href="{% url 'logIn' %}">Login</a></p>
+                                </div>
+                            </form>
 
 							<!-- /Account Form -->
 						</div>

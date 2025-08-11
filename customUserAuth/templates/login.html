@@ -55,7 +55,7 @@
 								<div class="input-block mb-4">
 									<label class="col-form-label">Email Address</label>
 									{% comment %} <input class="form-control" type="text" value="admin@smartems.com"> {% endcomment %}
-									<input class="form-control" type="text" value="">
+									<input class="form-control" type="email" name="email">
 								</div>
 								<div class="input-block mb-4">
 									<div class="row align-items-center">
@@ -63,14 +63,14 @@
 											<label class="col-form-label">Password</label>
 										</div>
 										<div class="col-auto">
-											<a class="text-muted" href="forgot-password.html">
+											<a class="text-muted" href="">
 												Forgot password?
 											</a>
 										</div>
 									</div>
 									<div class="position-relative">
 										{% comment %} <input class="form-control" type="password" value="admin" id="password"> {% endcomment %}
-										<input class="form-control" type="password" value="" id="password">
+										<input class="form-control" type="password" name="password" id="password">
 										<span class="fa-solid fa-eye-slash" id="toggle-password"></span>
 									</div>
 								</div>
