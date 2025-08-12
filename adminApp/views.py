@@ -142,3 +142,84 @@ def delete_designation(request, desig_id):
         'designation': designation,
     }
     return render(request, 'departments/delete_designation.html', context)
+
+#Holidays
+
+def holiday_list(request):
+    current_year = timezone.now().year
+    year = int(request.GET.get('year', current_year))
+    holidays = HolidayModel.objects.filter(date__year=year).order_by('date')
+    
+    years = list(range(current_year - 5, current_year + 6))
+    
+    context = {
+        'holidays': holidays,
+        'current_year': year,
+        'years': years,
+    }
+    return render(request, 'holidays.html', context)
+
+
+def add_holiday(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        date_str = request.POST.get('date')
+        
+        if title and date_str:
+            try:
+                date_obj = timezone.datetime.strptime(date_str, '%Y-%m-%d').date()
+                
+                HolidayModel.objects.create(
+                    title=title,
+                    date=date_obj
+                )
+                messages.success(request, 'Holiday added successfully!')
+                return redirect('holiday_list')
+            except ValueError:
+                messages.error(request, 'Invalid date format!')
+        else:
+            messages.error(request, 'Title and Date are required!')
+    
+    return redirect('holiday_list')
+
+
+def edit_holiday(request, holiday_id):
+    holiday = get_object_or_404(HolidayModel, id=holiday_id)
+    
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        date_str = request.POST.get('date')
+        
+        if title and date_str:
+            try:
+                # Parse the date string
+                date_obj = timezone.datetime.strptime(date_str, '%Y-%m-%d').date()
+                
+                holiday.title = title
+                holiday.date = date_obj
+                holiday.save()
+                messages.success(request, 'Holiday updated successfully!')
+                return redirect('holiday_list')
+            except ValueError:
+                messages.error(request, 'Invalid date format!')
+        else:
+            messages.error(request, 'Title and Date are required!')
+    
+    context = {
+        'holiday': holiday,
+    }
+    return render(request, 'edit_holiday.html', context)
+
+
+def delete_holiday(request, holiday_id):
+    holiday = get_object_or_404(HolidayModel, id=holiday_id)
+    
+    if request.method == 'POST':
+        holiday.delete()
+        messages.success(request, 'Holiday deleted successfully!')
+        return redirect('holiday_list')
+    
+    context = {
+        'holiday': holiday,
+    }
+    return render(request, 'delete_holiday.html', context)

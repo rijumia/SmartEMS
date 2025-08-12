@@ -1,5 +1,6 @@
 from django.db import models
 from customUserAuth.models import CustomUserAuthModel
+from django.utils import timezone
 
 # Create your models here.
 class DepartmentModel(models.Model):
@@ -36,3 +37,24 @@ class ProfileModel(models.Model):
     
     def __str__(self):
         return f"{self.full_name}'s Profile"
+    
+
+class HolidayModel(models.Model):
+    title = models.CharField(max_length=100)
+    date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['date']
+    
+    def __str__(self):
+        return self.title
+    
+    @property
+    def is_past(self):
+        return self.date < timezone.now().date()
+    
+    @property
+    def day_name(self):
+        return self.date.strftime('%A')

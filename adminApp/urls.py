@@ -14,4 +14,9 @@ urlpatterns = [
     path('designations/add/', add_designation, name='add_designation'),
     path('designations/edit/<int:desig_id>/', edit_designation, name='edit_designation'),
     path('designations/delete/<int:desig_id>/', delete_designation, name='delete_designation'),
+
+    path('holidays/', holiday_list, name='holiday_list'),
+    path('holidays/add/', add_holiday, name='add_holiday'),
+    path('holidays/edit/<int:holiday_id>/', edit_holiday, name='edit_holiday'),
+    path('holidays/delete/<int:holiday_id>/', delete_holiday, name='delete_holiday'),
 ]

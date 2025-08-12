@@ -326,7 +326,7 @@
                         <li><a href="attendance.html">Attendance</a></li>
                         <li><a href="{% url 'departments' %}" class="{% if request.resolver_match.url_name == 'departments' %}active{% endif %}">Departments</a></li>
                         <li><a href="{% url 'designation_list' %}" class="{% if request.resolver_match.url_name == 'designation_list' %}active{% endif %}">Designations</a></li>
-                        <li><a href="holidays.html">Holidays</a></li>
+                        <li><a href="{% url 'holiday_list' %}" class="{% if request.resolver_match.url_name == 'holiday_list' %}active{% endif %}">Holidays</a></li>
                         {% comment %} <li><a href="timesheet.html">Timesheet</a></li>
                         <li><a href="shift-scheduling.html">Shift & Schedule</a></li>
                         <li><a href="overtime.html">Overtime</a></li> {% endcomment %}
