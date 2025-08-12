@@ -293,7 +293,7 @@
                 <li class="menu-title"> 
                     <span>Main</span>
                 </li>
-                <li class="submenu active">
+                <li class="submenu {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                     <a href="{% url 'dashboard' %}"><i class="la la-dashboard"></i> <span> Dashboard</span></a>
                 </li>
                 {% comment %} <li class="submenu">
@@ -319,12 +319,12 @@
                     <span>Employees</span>
                 </li>
                 <li class="submenu">
-                    <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
+                    <a href="#"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="employees.html">All Employees</a></li>
                         <li><a href="leaves.html">Leaves</a></li>
                         <li><a href="attendance.html">Attendance</a></li>
-                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="{% url 'departments' %}" class="{% if request.resolver_match.url_name == 'departments' %}active{% endif %}">Departments</a></li>
                         <li><a href="designations.html">Designations</a></li>
                         <li><a href="holidays.html">Holidays</a></li>
                         {% comment %} <li><a href="timesheet.html">Timesheet</a></li>

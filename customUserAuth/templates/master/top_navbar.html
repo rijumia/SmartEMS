@@ -264,7 +264,21 @@
 
 					<li class="nav-item dropdown has-arrow main-drop">
 						<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-							<span class="user-img"><img src="{% static "assets/img/profiles/avatar-21.jpg" %}" alt="User Image">
+							<span class="user-img"><img 
+														src="
+														{% if request.user.profile.profile_image %}
+															{{ request.user.profile.profile_image.url }}
+														{% elif request.user.first_name and request.user.last_name %}
+															https://avatar.iran.liara.run/username?username={{ request.user.first_name }}+{{ request.user.last_name }}
+														{% elif request.user.get_full_name %}
+															https://avatar.iran.liara.run/username?username={{ request.user.get_full_name|urlencode }}
+														{% else %}
+															https://avatar.iran.liara.run/username?username={{ request.user.username|urlencode }}
+														{% endif %}
+														" 
+														alt="User Image"
+														style="width: 35px; height: 35px; border-radius: 50%;"
+													>
 							<span class="status online"></span></span>
 							<span>{{request.user.user_types}}</span>
 						</a>
