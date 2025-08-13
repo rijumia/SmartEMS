@@ -143,6 +143,18 @@ def delete_designation(request, desig_id):
     }
     return render(request, 'departments/delete_designation.html', context)
 
+#Employees
+
+def addEmployee(request):
+    return redirect('employeeList')
+
+def employeeList(request):
+    return render(request, 'employees.html')
+
+def employeeListView(request):
+    return render(request, 'employees-list.html')
+
+
 #Holidays
 
 def holiday_list(request):

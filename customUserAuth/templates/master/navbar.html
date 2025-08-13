@@ -321,7 +321,7 @@
                 <li class="submenu">
                     <a href="#"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="employees.html">All Employees</a></li>
+                        <li><a href="{% url 'employeeList' %}" class="{% if request.resolver_match.url_name == 'employeeList' or request.resolver_match.url_name == 'employeeListView' %}active{% endif %}">All Employees</a></li>
                         <li><a href="leaves.html">Leaves</a></li>
                         <li><a href="attendance.html">Attendance</a></li>
                         <li><a href="{% url 'departments' %}" class="{% if request.resolver_match.url_name == 'departments' %}active{% endif %}">Departments</a></li>
