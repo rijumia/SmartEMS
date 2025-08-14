@@ -154,9 +154,18 @@ def employeeList(request):
 def employeeListView(request):
     return render(request, 'employees-list.html')
 
+#Leaves
+def addLeave(request):
+    return redirect('leavesList')
+
+def leavesList(request):
+    return render(request, 'leaves.html')
+
+#attendance
+def attendance(request):
+    return render(request, 'attendance.html')
 
 #Holidays
-
 def holiday_list(request):
     current_year = timezone.now().year
     year = int(request.GET.get('year', current_year))

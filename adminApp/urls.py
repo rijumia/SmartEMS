@@ -19,6 +19,11 @@ urlpatterns = [
     path('employeeList/', employeeList, name='employeeList'),
     path('employeeListView/', employeeListView, name='employeeListView'),
 
+    path('add-leave/', addLeave, name='addLeave'),
+    path('leavesList/', leavesList, name='leavesList'),
+
+    path('attendance/', attendance, name='attendance'),
+
     path('holidays/', holiday_list, name='holiday_list'),
     path('holidays/add/', add_holiday, name='add_holiday'),
     path('holidays/edit/<int:holiday_id>/', edit_holiday, name='edit_holiday'),

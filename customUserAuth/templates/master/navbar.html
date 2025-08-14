@@ -322,8 +322,8 @@
                     <a href="#"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{% url 'employeeList' %}" class="{% if request.resolver_match.url_name == 'employeeList' or request.resolver_match.url_name == 'employeeListView' %}active{% endif %}">All Employees</a></li>
-                        <li><a href="leaves.html">Leaves</a></li>
-                        <li><a href="attendance.html">Attendance</a></li>
+                        <li><a href="{% url 'leavesList' %}" class="{% if request.resolver_match.url_name == 'leavesList' %}active{% endif %}">Leaves</a></li>
+                        <li><a href="{% url 'attendance' %}" class="{% if request.resolver_match.url_name == 'attendance' %}active{% endif %}">Attendance</a></li>
                         <li><a href="{% url 'departments' %}" class="{% if request.resolver_match.url_name == 'departments' %}active{% endif %}">Departments</a></li>
                         <li><a href="{% url 'designation_list' %}" class="{% if request.resolver_match.url_name == 'designation_list' %}active{% endif %}">Designations</a></li>
                         <li><a href="{% url 'holiday_list' %}" class="{% if request.resolver_match.url_name == 'holiday_list' %}active{% endif %}">Holidays</a></li>
